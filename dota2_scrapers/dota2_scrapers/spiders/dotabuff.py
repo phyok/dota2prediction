@@ -11,8 +11,8 @@ class Hero(Item):
 
 class DotabuffSpider(CrawlSpider):
     name = 'dotabuff'
-    start_urls = ['http://dotabuff.com']
-    rules = [Rule(SgmlLinkExtractor(allow='heroes\/winning\?date='), 'parse_hero')]
+    start_urls = ['http://dotabuff.com/heroes']
+    rules = [Rule(SgmlLinkExtractor(allow='winning'), 'parse_hero')]
 
     def parse_hero(self, response):
         heroes = []
