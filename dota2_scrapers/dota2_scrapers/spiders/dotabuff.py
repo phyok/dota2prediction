@@ -7,7 +7,7 @@ class Hero(Item):
     name = Field(serializer=str)
     win_rate = Field(serializer=lambda x: float(x.replace('%', '')))
     matches_played = Field(serializer=lambda x: int(x.replace(',', '')))
-    kda_ratio = Field(serializer=lambda x: float(x.replace('%', '')))
+    kda_ratio = Field(serializer=lambda x: float(x))
 
 class DotabuffSpider(CrawlSpider):
     name = 'dotabuff'
