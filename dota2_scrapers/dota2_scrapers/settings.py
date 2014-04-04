@@ -11,9 +11,10 @@ BOT_NAME = 'dota2_scrapers'
 SPIDER_MODULES = ['dota2_scrapers.spiders']
 NEWSPIDER_MODULE = 'dota2_scrapers.spiders'
 
-#ITEM_PIPELINES = {
+ITEM_PIPELINES = {
 #    'dota2_scrapers.pipelines.DotabuffCsvItemPipeline': 0
-#}
+     'dota2_scrapers.pipelines.DatDotaCsvItemPipeline': 100
+}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'dota2_scrapers (+http://www.yourdomain.com)'
