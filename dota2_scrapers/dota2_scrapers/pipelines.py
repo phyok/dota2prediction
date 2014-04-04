@@ -1,6 +1,7 @@
 from scrapy import signals
 from scrapy.contrib.exporter import CsvItemExporter
 from scrapy.conf import settings
+from scrapy.exceptions import DropItem
 
 # Define your item pipelines here
 #
@@ -12,6 +13,33 @@ class Dota2ScrapersPipeline(object):
         return item
 
 class DatDotaCsvItemPipeline(object):
+
+    match_export_fields = [
+        'match_id',
+        'radiant_team',
+        'dire_team',
+        'winner',
+        'radiant_player_0',
+        'radiant_player_1',
+        'radiant_player_2',
+        'radiant_player_3',
+        'radiant_player_4',
+        'radiant_hero_0',
+        'radiant_hero_1',
+        'radiant_hero_2',
+        'radiant_hero_3',
+        'radiant_hero_4',
+        'dire_player_0',
+        'dire_player_1',
+        'dire_player_2',
+        'dire_player_3',
+        'dire_player_4',
+        'dire_hero_0',
+        'dire_hero_1',
+        'dire_hero_2',
+        'dire_hero_3',
+        'dire_hero_4'
+        ]
 
     def __init__(self):
         self.files = {}
@@ -27,32 +55,7 @@ class DatDotaCsvItemPipeline(object):
         file = open('%s.csv' % spider.name, 'w+b')
         self.files[spider.name] = file
         self.exporter = CsvItemExporter(file)
-        self.exporter.fields_to_export = [
-            'match_id',
-            'radiant_team',
-            'dire_team',
-            'winner',
-            'radiant_player_0',
-            'radiant_player_1',
-            'radiant_player_2',
-            'radiant_player_3',
-            'radiant_player_4',
-            'radiant_hero_0',
-            'radiant_hero_1',
-            'radiant_hero_2',
-            'radiant_hero_3',
-            'radiant_hero_4',
-            'dire_player_0',
-            'dire_player_1',
-            'dire_player_2',
-            'dire_player_3',
-            'dire_player_4',
-            'dire_hero_0',
-            'dire_hero_1',
-            'dire_hero_2',
-            'dire_hero_3',
-            'dire_hero_4'
-            ]
+        self.exporter.fields_to_export = DatDotaCsvItemPipeline.match_export_fields
         self.exporter.start_exporting()
 
     def spider_closed(self, spider):
@@ -62,6 +65,9 @@ class DatDotaCsvItemPipeline(object):
 
     def process_item(self, item, spider):
         self.exporter.export_item(item)
+        for field in DatDotaCsvItemPipeline.match_export_fields:
+            if not item.get(field, None) or item[field].lower() == 'unknown':
+                raise DropItem('Missing %s in %s' % (field, item))
         return item
 
 def item_type(item):
