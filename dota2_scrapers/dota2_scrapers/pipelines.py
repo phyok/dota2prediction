@@ -41,8 +41,17 @@ class DatDotaCsvItemPipeline(object):
         'dire_hero_4'
         ]
 
+    player_export_fields = [
+        'player',
+        'matches',
+        'wins',
+        'losses',
+        'win_rate'
+        ]
+
     def __init__(self):
         self.files = {}
+        self.exporters = {}
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -54,18 +63,29 @@ class DatDotaCsvItemPipeline(object):
     def spider_opened(self, spider):
         file = open('%s.csv' % spider.name, 'w+b')
         self.files[spider.name] = file
-        self.exporter = CsvItemExporter(file)
-        self.exporter.fields_to_export = DatDotaCsvItemPipeline.match_export_fields
-        self.exporter.start_exporting()
+        exporter = CsvItemExporter(file)
+        if spider.name == 'datdota_matches':
+            exporter.fields_to_export = DatDotaCsvItemPipeline.match_export_fields
+        elif spider.name == 'datdota_players':
+
+            exporter.fields_to_export = DatDotaCsvItemPipeline.player_export_fields
+        exporter.start_exporting()
+        self.exporters[spider.name] = exporter
 
     def spider_closed(self, spider):
-        self.exporter.finish_exporting()
+        exporter = self.exporters.pop(spider.name)
+        exporter.finish_exporting()
         file = self.files.pop(spider.name)
         file.close()
 
     def process_item(self, item, spider):
-        self.exporter.export_item(item)
-        for field in DatDotaCsvItemPipeline.match_export_fields:
+        self.exporters[spider.name].export_item(item)
+        export_fields = None
+        if spider.name == 'datdota_matches':
+            export_fields = DatDotaCsvItemPipeline.match_export_fields
+        elif spider.name == 'datdota_players':
+            export_fields = DatDotaCsvItemPipeline.player_export_fields
+        for field in export_fields:
             if not item.get(field, None) or item[field].lower() == 'unknown':
                 raise DropItem('Missing %s in %s' % (field, item))
         return item
