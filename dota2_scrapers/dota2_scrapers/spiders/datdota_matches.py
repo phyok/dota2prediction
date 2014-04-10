@@ -32,11 +32,20 @@ class Match(Item):
 
 class DatDotaMatchesSpider(CrawlSpider):
     name = 'datdota_matches'
-    start_urls = ['http://www.datdota.com/matches.php']
+    start_urls = ['http://www.datdota.com/matches.php?l0=8000']
     rules = [
         Rule(SgmlLinkExtractor(allow=('match\.php\?q=\d+')), callback='parse_match'),
         Rule(SgmlLinkExtractor(allow=('matches\.php\?l0=\d+')), callback='get_more_matches', follow=True)
         ]
+
+    def __init__(self, category=None, *args, **kwargs):
+        self.heroes = {}
+        super(DatDotaMatchesSpider, self).__init__(*args, **kwargs)
+        hero_map = open('datdota_hero_mapper.csv', 'r')
+        hero_map.readline()
+        for line in hero_map:
+            hero = line.strip().split(',')
+            self.heroes[hero[0]] = hero[1]
 
     def get_more_matches(self, response):
         sel = Selector(response)
@@ -61,5 +70,5 @@ class DatDotaMatchesSpider(CrawlSpider):
             if i >= 5:
                 team = 'dire'
             match[player_field % (team, i % num_players)] = scoreboard[i].xpath('.//td[3]//a/text()').extract()[0]
-            match[hero_field % (team, i % num_players)] = scoreboard[i].xpath('.//td[4]//img/@alt').extract()[0]
+            match[hero_field % (team, i % num_players)] = self.heroes[scoreboard[i].xpath('.//td[4]//img/@alt').extract()[0]]
         return match

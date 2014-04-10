@@ -57,6 +57,11 @@ class DatDotaCsvItemPipeline(object):
         'win_rate'
         ]
 
+    hero_mapper_export_fields = [
+        'hero_alt',
+        'hero'
+        ]
+
     def __init__(self):
         self.files = {}
         self.exporters = {}
@@ -79,8 +84,10 @@ class DatDotaCsvItemPipeline(object):
             exporter.fields_to_export = DatDotaCsvItemPipeline.player_export_fields
         elif spider.name == 'datdota_heroes':
             exporter.fields_to_export = DatDotaCsvItemPipeline.hero_export_fields
-        exporter.start_exporting()
+        elif spider.name == 'datdota_hero_mapper':
+            exporter.fields_to_export = DatDotaCsvItemPipeline.hero_mapper_export_fields
         self.exporters[spider.name] = exporter
+        exporter.start_exporting()
 
     def spider_closed(self, spider):
         exporter = self.exporters.pop(spider.name)
@@ -97,10 +104,13 @@ class DatDotaCsvItemPipeline(object):
             export_fields = DatDotaCsvItemPipeline.player_export_fields
         elif spider.name == 'datdota_heroes':
             export_fields = DatDotaCsvItemPipeline.hero_export_fields
-        for field in export_fields:
-            if not item.get(field, None) or item[field].lower() == 'unknown':
-                raise DropItem('Missing %s in %s' % (field, item))
-        return item
+        elif spider.name == 'datdota_hero_mapper':
+            export_fields = DatDotaCsvItemPipeline.hero_mapper_export_fields
+        if export_fields:
+            for field in export_fields:
+                if not item.get(field, None) or item[field].lower() == 'unknown':
+                    raise DropItem('Missing %s in %s' % (field, item))
+            return item
 
 def item_type(item):
     return type(item).__name__.lower()
