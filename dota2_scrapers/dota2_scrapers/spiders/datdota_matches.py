@@ -32,7 +32,7 @@ class Match(Item):
 
 class DatDotaMatchesSpider(CrawlSpider):
     name = 'datdota_matches'
-    start_urls = ['http://www.datdota.com/matches.php?l0=8000']
+    start_urls = ['http://www.datdota.com/matches.php']
     rules = [
         Rule(SgmlLinkExtractor(allow=('match\.php\?q=\d+')), callback='parse_match'),
         Rule(SgmlLinkExtractor(allow=('matches\.php\?l0=\d+')), callback='get_more_matches', follow=True)
