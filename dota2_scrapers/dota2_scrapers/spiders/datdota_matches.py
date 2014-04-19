@@ -4,11 +4,19 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import Selector
 
+def serialize_winner(side):
+    if side.lower() == 'radiant':
+        return 0
+    elif side.lower() == 'dire':
+        return 1
+    else:
+        return None
+
 class Match(Item):
    match_id = Field(serializer=int)
    radiant_team = Field(serializer=str)
    dire_team = Field(serializer=str)
-   winner = Field(serializer=str)
+   winner = Field(serializer=serialize_winner)
    radiant_player_0 = Field(serializer=str)
    radiant_player_1 = Field(serializer=str)
    radiant_player_2 = Field(serializer=str)
