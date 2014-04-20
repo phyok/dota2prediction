@@ -1,42 +1,8 @@
-from scrapy.item import Item, Field
 from scrapy.http import Request
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import Selector
-
-def serialize_winner(side):
-    if side.lower() == 'radiant':
-        return 0
-    elif side.lower() == 'dire':
-        return 1
-    else:
-        return None
-
-class Match(Item):
-   match_id = Field(serializer=int)
-   radiant_team = Field(serializer=str)
-   dire_team = Field(serializer=str)
-   winner = Field(serializer=serialize_winner)
-   radiant_player_0 = Field(serializer=str)
-   radiant_player_1 = Field(serializer=str)
-   radiant_player_2 = Field(serializer=str)
-   radiant_player_3 = Field(serializer=str)
-   radiant_player_4 = Field(serializer=str)
-   radiant_hero_0 = Field(serializer=str)
-   radiant_hero_1 = Field(serializer=str)
-   radiant_hero_2 = Field(serializer=str)
-   radiant_hero_3 = Field(serializer=str)
-   radiant_hero_4 = Field(serializer=str)
-   dire_player_0 = Field(serializer=str)
-   dire_player_1 = Field(serializer=str)
-   dire_player_2 = Field(serializer=str)
-   dire_player_3 = Field(serializer=str)
-   dire_player_4 = Field(serializer=str)
-   dire_hero_0 = Field(serializer=str)
-   dire_hero_1 = Field(serializer=str)
-   dire_hero_2 = Field(serializer=str)
-   dire_hero_3 = Field(serializer=str)
-   dire_hero_4 = Field(serializer=str)
+from dota2_scrapers.items import MatchItem
 
 class DatDotaMatchesSpider(CrawlSpider):
     name = 'datdota_matches'
@@ -63,7 +29,7 @@ class DatDotaMatchesSpider(CrawlSpider):
     def parse_match(self, response):
         sel = Selector(response)
         match_info = sel.xpath('//table')[0].xpath('tbody//tr')
-        match = Match()
+        match = MatchItem()
         match['match_id'] = match_info.xpath('.//td[1]/text()').extract()[0]
         match['radiant_team'] = match_info.xpath('.//td[3]//a/text()').extract()[0]
         match['dire_team'] = match_info.xpath('.//td[4]//a/text()').extract()[0]

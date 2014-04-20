@@ -6,13 +6,18 @@
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #
 
+import sys
+sys.path.append('../dota2_predictor')
+
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'dota2_predictor.settings'
+
 BOT_NAME = 'dota2_scrapers'
 
 SPIDER_MODULES = ['dota2_scrapers.spiders']
 NEWSPIDER_MODULE = 'dota2_scrapers.spiders'
 
 ITEM_PIPELINES = {
-#    'dota2_scrapers.pipelines.DotabuffCsvItemPipeline': 0
      'dota2_scrapers.pipelines.DatDotaCsvItemPipeline': 100
 }
 
