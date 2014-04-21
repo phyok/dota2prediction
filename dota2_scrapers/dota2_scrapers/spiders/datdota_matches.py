@@ -7,7 +7,7 @@ from dota2.models import Hero, Player
 
 class DatDotaMatchesSpider(CrawlSpider):
     name = 'datdota_matches'
-    start_urls = ['http://www.datdota.com/matches.php?l0=7000']
+    start_urls = ['http://www.datdota.com/matches.php']
     rules = [
         Rule(SgmlLinkExtractor(allow=('match\.php\?q=\d+')), callback='parse_match'),
         Rule(SgmlLinkExtractor(allow=('matches\.php\?l0=\d+')), callback='get_more_matches', follow=True)
