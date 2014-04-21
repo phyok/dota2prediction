@@ -108,8 +108,7 @@ class DatDotaCsvItemPipeline(object):
             export_fields = DatDotaCsvItemPipeline.hero_mapper_export_fields
         if export_fields:
             for field in export_fields:
-                if not item.get(field, None) or item[field].lower() == 'unknown':
+                if not item.get(field, None):
                     raise DropItem('Missing %s in %s' % (field, item))
-            if spider.name != 'datdota_hero_mapper':
-                item.update()
-            return item
+            if spider.name == 'datdota_hero_mapper' or item.update():
+                return item

@@ -3,10 +3,11 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import Selector
 from dota2_scrapers.items import MatchItem
+from dota2.models import Hero, Player
 
 class DatDotaMatchesSpider(CrawlSpider):
     name = 'datdota_matches'
-    start_urls = ['http://www.datdota.com/matches.php']
+    start_urls = ['http://www.datdota.com/matches.php?l0=7000']
     rules = [
         Rule(SgmlLinkExtractor(allow=('match\.php\?q=\d+')), callback='parse_match'),
         Rule(SgmlLinkExtractor(allow=('matches\.php\?l0=\d+')), callback='get_more_matches', follow=True)
@@ -33,8 +34,11 @@ class DatDotaMatchesSpider(CrawlSpider):
         match['match_id'] = match_info.xpath('.//td[1]/text()').extract()[0]
         match['radiant_team'] = match_info.xpath('.//td[3]//a/text()').extract()[0]
         match['dire_team'] = match_info.xpath('.//td[4]//a/text()').extract()[0]
-        match['winner'] = match_info.xpath('.//td[5]/text()').extract()[0]
-
+        winner = match_info.xpath('.//td[5]/text()').extract()[0]
+        if winner.lower() == 'radiant':
+            match['winner'] = 0
+        elif winner.lower() == 'dire':
+            match['winner'] = 1
         scoreboard = sel.xpath('//table')[1].xpath('tbody//tr')
         player_field = '%s_player_%d'
         hero_field = '%s_hero_%d'
@@ -43,6 +47,8 @@ class DatDotaMatchesSpider(CrawlSpider):
         for i in range(0, len(scoreboard)):
             if i >= 5:
                 team = 'dire'
-            match[player_field % (team, i % num_players)] = scoreboard[i].xpath('.//td[3]//a/text()').extract()[0]
-            match[hero_field % (team, i % num_players)] = self.heroes[scoreboard[i].xpath('.//td[4]//img/@alt').extract()[0]]
+            player = scoreboard[i].xpath('.//td[1]//a/text()') or scoreboard[i].xpath('.//td[3]//a/text()')
+            hero = scoreboard[i].xpath('.//td[3]//img/@alt') or scoreboard[i].xpath('.//td[4]//img/@alt')
+            match[player_field % (team, i % num_players)] = Player.objects.get(player=player.extract()[0])
+            match[hero_field % (team, i % num_players)] = Hero.objects.get(hero=self.heroes[hero.extract()[0]])
         return match
