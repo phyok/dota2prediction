@@ -13,15 +13,6 @@ class DatDotaMatchesSpider(CrawlSpider):
         Rule(SgmlLinkExtractor(allow=('matches\.php\?l0=\d+')), callback='get_more_matches', follow=True)
         ]
 
-    def __init__(self, category=None, *args, **kwargs):
-        self.heroes = {}
-        super(DatDotaMatchesSpider, self).__init__(*args, **kwargs)
-        hero_map = open('datdota_hero_mapper.csv', 'r')
-        hero_map.readline()
-        for line in hero_map:
-            hero = line.strip().split(',')
-            self.heroes[hero[0]] = hero[1]
-
     def get_more_matches(self, response):
         sel = Selector(response)
         if not sel.xpath('//table//tbody//tr'):
@@ -39,16 +30,32 @@ class DatDotaMatchesSpider(CrawlSpider):
             match['winner'] = 0
         elif winner.lower() == 'dire':
             match['winner'] = 1
+        # Page layout is inconsistent.  Sometimes, Radiant and Dire are
+        # in the same table.  Other times, they have separate tables.
         scoreboard = sel.xpath('//table')[1].xpath('tbody//tr')
+        radiant_scoreboard = None
+        dire_scoreboard = None
+        if len(scoreboard) == 10:
+            radiant_scoreboard = scoreboard[:5]
+            dire_scoreboard = scoreboard[5:]
+        else:
+            radiant_scoreboard = scoreboard
+            dire_scoreboard = sel.xpath('//table')[2].xpath('tbody//tr')
         player_field = '%s_player_%d'
         hero_field = '%s_hero_%d'
+        num_players = 10
         team = 'radiant'
-        num_players = len(scoreboard) / 2
-        for i in range(0, len(scoreboard)):
+        scoreboard = radiant_scoreboard
+        for i in range(0, num_players):
+            j = i % 5
             if i >= 5:
                 team = 'dire'
-            player = scoreboard[i].xpath('.//td[1]//a/text()') or scoreboard[i].xpath('.//td[3]//a/text()')
-            hero = scoreboard[i].xpath('.//td[3]//img/@alt') or scoreboard[i].xpath('.//td[4]//img/@alt')
-            match[player_field % (team, i % num_players)] = Player.objects.get(player=player.extract()[0])
-            match[hero_field % (team, i % num_players)] = Hero.objects.get(hero=self.heroes[hero.extract()[0]])
+                scoreboard = dire_scoreboard
+            player = scoreboard[j].xpath('.//td[1]//a/text()') or scoreboard[j].xpath('.//td[3]//a/text()')
+            hero = scoreboard[j].xpath('.//td[3]//img/@alt') or scoreboard[j].xpath('.//td[4]//img/@alt')
+            try:
+                match[player_field % (team, j)] = Player.objects.get(player=player.extract()[0])
+            except Exception:
+                pass
+            match[hero_field % (team, j)] = Hero.objects.get(hero_alt=hero.extract()[0])
         return match

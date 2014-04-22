@@ -51,15 +51,11 @@ class DatDotaCsvItemPipeline(object):
 
     hero_export_fields = [
         'hero',
+        'hero_alt',
         'matches',
         'wins',
         'losses',
-        'win_rate'
-        ]
-
-    hero_mapper_export_fields = [
-        'hero_alt',
-        'hero'
+        'win_rate',
         ]
 
     def __init__(self):
@@ -74,18 +70,15 @@ class DatDotaCsvItemPipeline(object):
         return pipeline
 
     def spider_opened(self, spider):
-        file = open('%s.csv' % spider.name, 'w')
+        file = open('%s.csv' % spider.name, 'w+b')
         self.files[spider.name] = file
         exporter = CsvItemExporter(file)
         if spider.name == 'datdota_matches':
             exporter.fields_to_export = DatDotaCsvItemPipeline.match_export_fields
         elif spider.name == 'datdota_players':
-
             exporter.fields_to_export = DatDotaCsvItemPipeline.player_export_fields
         elif spider.name == 'datdota_heroes':
             exporter.fields_to_export = DatDotaCsvItemPipeline.hero_export_fields
-        elif spider.name == 'datdota_hero_mapper':
-            exporter.fields_to_export = DatDotaCsvItemPipeline.hero_mapper_export_fields
         self.exporters[spider.name] = exporter
         exporter.start_exporting()
 
@@ -96,19 +89,6 @@ class DatDotaCsvItemPipeline(object):
         file.close()
 
     def process_item(self, item, spider):
-        self.exporters[spider.name].export_item(item)
-        export_fields = None
-        if spider.name == 'datdota_matches':
-            export_fields = DatDotaCsvItemPipeline.match_export_fields
-        elif spider.name == 'datdota_players':
-            export_fields = DatDotaCsvItemPipeline.player_export_fields
-        elif spider.name == 'datdota_heroes':
-            export_fields = DatDotaCsvItemPipeline.hero_export_fields
-        elif spider.name == 'datdota_hero_mapper':
-            export_fields = DatDotaCsvItemPipeline.hero_mapper_export_fields
-        if export_fields:
-            for field in export_fields:
-                if not item.get(field, None):
-                    raise DropItem('Missing %s in %s' % (field, item))
-            if spider.name == 'datdota_hero_mapper' or item.update():
-                return item
+        if item.update():
+            self.exporters[spider.name].export_item(item)
+            return item
