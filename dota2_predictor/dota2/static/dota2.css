@@ -1,11 +1,57 @@
 body {
-    padding-top: 40px;
+    padding-top: 68px;
+    background-image: url("images/clash_of_the_ancients.png");
+    background-position: center;
+    background-size: 100%;
+}
+
+.dota {
+    font-family: 'Marcellus SC', 'serif';
+    font-weight: normal;
+    color: #aaa19c;
+}
+
+.navbar .brand {
+    font-family: 'Marcellus SC', 'serif';
+    color: #aaa19c;
+    text-shadow: none;
+    float: none;
+    padding: 0 65;
+    margin: -5 0 0 0;
+}
+
+.navbar .logo {
+    top: 8px;
+    position: relative;
+}
+
+h2.team {
+    text-align: center;
 }
 
 input[type="text"] {
     height: 25px;
 }
 
-h2.team {
-    text-align: center;
+.navbar {
+    background-image: url("images/navbar_background.jpg");
+    background-repeat: repeat-x;
+    height: 68px;
+    width: 100%;
 }
+
+.navbar .navbar-inner {
+    background-image: url("images/navbar.jpg");
+    border-width: 0px;
+    height: 68px;
+    width: 100%;
+}
+
+.navbar .navbar-shadow {
+    background-image: url("images/navbar_shadow.png");
+    background-repeat: repeat-x;
+    height: 29px;
+    width: 100%;
+}
+
+
