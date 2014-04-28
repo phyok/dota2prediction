@@ -1,0 +1,58 @@
+{% extends "dota2/base.html" %}
+
+{% block content %}
+
+<div class="row-fluid">
+<form action="/index/" method="post">
+    <div class="span6">
+    <h2 class="team">Radiant</h2>
+    <div>
+        <input id="radiant_player_0" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="radiant_hero_0" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+    </div>
+    <div>
+        <input id="radiant_player_1" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="radiant_hero_1" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+   <div>
+        <input id="radiant_player_2" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="radiant_hero_2" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+   <div>
+        <input id="radiant_player_3" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="radiant_hero_3" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+   <div>
+        <input id="radiant_player_4" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="radiant_hero_4" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+   </div>
+
+    <div class="span6">
+    <h2 class="team">Dire</h2>
+    <div>
+        <input id="dire_player_0" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="dire_hero_0" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+    </div>
+    <div>
+        <input id="dire_player_1" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="dire_hero_1" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+   <div>
+        <input id="dire_player_2" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="dire_hero_2" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+   <div>
+        <input id="dire_player_3" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="dire_hero_3" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+   <div>
+        <input id="dire_player_4" type="text" data-provide="typeahead" data-source="{{players}}" placeholder="Player" />
+        <input id="dire_hero_4" type="text" data-provide="typeahead" data-source="{{heroes}}" placeholder="Hero" />
+   </div>
+ 
+    </div>
+</form>
+</div>
+
+{% endblock %}

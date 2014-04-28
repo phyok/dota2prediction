@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'dota2.css'%}" rel="stylesheet">
+        <link href="{% static 'bootstrap/css/bootstrap-responsive.min.css' %}">
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    </head>
+
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Dota 2 Predictor</a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+<html>
