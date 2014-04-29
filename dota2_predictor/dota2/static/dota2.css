@@ -5,6 +5,42 @@ body {
     background-size: 100%;
 }
 
+div.container, .navbar .container {
+    display: table;
+    height: 100%;
+    width: 1080px;
+}
+
+.wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.team {
+    background-image: url("images/background.jpg");
+    border-radius: 8px;
+    border: 1px solid;
+    /*box-shadow: 0 0 10px #b47ff0;*/
+    padding: 0 10;
+}
+
+.dire {
+    float: left;
+    border-color: #d5483f;
+    box-shadow: 0 0 10px #d5483f;
+}
+
+.radiant {
+    float: right;
+    border-color: #96d5f8;
+    box-shadow: 0 0 10px #96d5f8;
+}
+
 .dota {
     font-family: 'Marcellus SC', 'serif';
     font-weight: normal;
@@ -25,7 +61,7 @@ body {
     position: relative;
 }
 
-h2.team {
+h1 {
     text-align: center;
 }
 
