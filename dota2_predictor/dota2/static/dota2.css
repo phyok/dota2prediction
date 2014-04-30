@@ -21,24 +21,45 @@ div.container, .navbar .container {
     margin-right: auto;
 }
 
-.team {
+div.team {
     background-image: url("images/background.jpg");
     border-radius: 8px;
     border: 1px solid;
-    /*box-shadow: 0 0 10px #b47ff0;*/
     padding: 0 10;
 }
 
-.dire {
+div.dire {
     float: left;
     border-color: #d5483f;
     box-shadow: 0 0 10px #d5483f;
 }
 
-.radiant {
+div.radiant {
     float: right;
-    border-color: #96d5f8;
-    box-shadow: 0 0 10px #96d5f8;
+    border-color: #6b9fe8 ;
+    box-shadow: 0 0 10px #6b9fe8;
+}
+
+input.dire:focus {
+    border: 1px solid #d5483f;
+    box-shadow: 0 0 10px #d5483f;
+}
+
+input.radiant:focus {
+    border: 1px solid #6b9fe8;
+    box-shadow: 0 0 10px #6b9fe8;
+}
+
+.dire .typeahead .active > a,
+.dire .typeahead .active > a:hover {
+    background-color: #d5483f;
+    background-image: none;
+}
+
+.radiant .typeahead .active > a,
+.radiant .typeahead .active > a:hover {
+    background-color: #6b9fe8;
+    background-image: none;
 }
 
 .dota {
