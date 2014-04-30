@@ -1,8 +1,27 @@
 body {
+    font-family: 'Marcellus SC', 'serif';
+    letter-spacing: 3px;
     padding-top: 68px;
     background-image: url("images/clash_of_the_ancients.png");
     background-position: center;
     background-size: 100%;
+}
+
+button.predict {
+    border: 1px solid #000000;
+    font-family: 'Marcellus SC', 'serif';
+    font-weight: normal;
+    letter-spacing: 3px;
+    color: #aaa19c;
+    background: linear-gradient(#101113, #1e2327);
+    width: 100%;
+    position: relative;
+    top: 100px;
+}
+
+button.predict:hover {
+    border: 1px solid #a974f4;
+    box-shadow: 0 0 10px #a974f4;
 }
 
 div.container, .navbar .container {
@@ -63,22 +82,22 @@ input.radiant:focus {
 }
 
 .dota {
-    font-family: 'Marcellus SC', 'serif';
     font-weight: normal;
     color: #aaa19c;
 }
 
-.navbar .brand {
-    font-family: 'Marcellus SC', 'serif';
+.navbar .logo span {
     color: #aaa19c;
     text-shadow: none;
     float: none;
-    padding: 0 65;
-    margin: -5 0 0 0;
+    font-size: 36px;
+    letter-spacing: 6px;
+    position: absolute;
+    margin: 6 0 0 4;
 }
 
 .navbar .logo {
-    top: 8px;
+    top: 16px;
     position: relative;
 }
 
@@ -87,6 +106,7 @@ h1 {
 }
 
 input[type="text"] {
+    border: 1px solid #000000;
     height: 25px;
     width: 180px;
 }
