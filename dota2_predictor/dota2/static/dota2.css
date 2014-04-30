@@ -1,6 +1,4 @@
 body {
-    font-family: 'Marcellus SC', 'serif';
-    letter-spacing: 3px;
     padding-top: 68px;
     background-image: url("images/clash_of_the_ancients.png");
     background-position: center;
@@ -82,6 +80,8 @@ input.radiant:focus {
 }
 
 .dota {
+    font-family: 'Marcellus SC', 'serif';
+    letter-spacing: 3px;
     font-weight: normal;
     color: #aaa19c;
 }
