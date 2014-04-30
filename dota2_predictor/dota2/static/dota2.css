@@ -10,6 +10,7 @@ button.predict {
     font-family: 'Marcellus SC', 'serif';
     font-weight: normal;
     letter-spacing: 3px;
+    text-shadow: 0px 0px 10px #000000;
     color: #aaa19c;
     background: linear-gradient(#101113, #1e2327);
     width: 100%;
@@ -20,6 +21,8 @@ button.predict {
 button.predict:hover {
     border: 1px solid #a974f4;
     box-shadow: 0 0 10px #a974f4;
+    color: #aaa19c;
+    text-shadow: 0px 0px 20px #a974f4;
 }
 
 div.container, .navbar .container {
@@ -88,12 +91,13 @@ input.radiant:focus {
 
 .navbar .logo span {
     color: #aaa19c;
-    text-shadow: none;
     float: none;
+    font-family: 'Marcellus SC', 'serif';
     font-size: 36px;
     letter-spacing: 6px;
+    text-shadow: 0px 0px 10px #000000;
     position: absolute;
-    margin: 6 0 0 4;
+    margin: 7 0 0 4;
 }
 
 .navbar .logo {
@@ -103,6 +107,7 @@ input.radiant:focus {
 
 h1 {
     text-align: center;
+    text-shadow: 0px 0px 10px #000000;
 }
 
 input[type="text"] {
