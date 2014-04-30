@@ -22,7 +22,7 @@ div.container, .navbar .container {
 }
 
 div.team {
-    background-image: url("images/background.jpg");
+    background: linear-gradient(#101113, #1e2327);
     border-radius: 8px;
     border: 1px solid;
     padding: 0 10;
@@ -88,6 +88,15 @@ h1 {
 
 input[type="text"] {
     height: 25px;
+    width: 180px;
+}
+
+input.player {
+    margin-right: 2px;
+}
+
+input.hero {
+    margin-left: 2px;
 }
 
 .navbar {
