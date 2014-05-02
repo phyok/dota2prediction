@@ -3,7 +3,7 @@ games = []
 for line in training_data:
     l = line.strip()
     games.append(l)
-    training_data.close()
+training_data.close()
 
 # calculcate win rates
 
@@ -30,8 +30,18 @@ inputSize = int(raw_intput())
 inputLines = []
 lineCount = 0
 while(lineCount < inputSize):
-    line = raw_input()
+    line = raw_input().split(",")
     inputLines.append(line)
     lineCount += 1
 
-for
+for line in inputLines:
+    total = 0
+    for i in range(0,5):
+        for j in range(5,10):
+            pair = (line[i].lower(), line[j].lower())
+            total += winRates[pair]
+    if total <= 0:
+        print 1
+    else:
+        print 2
+
