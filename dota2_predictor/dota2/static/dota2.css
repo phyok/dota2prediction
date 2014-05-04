@@ -18,6 +18,17 @@ button.predict {
     top: 100px;
 }
 
+button.predict[disabled] {
+    color: #aaa19c;
+}
+
+button.predict[disabled]:hover {
+    border: 1px solid #000000;
+    color: #aaa19c;
+    box-shadow: none;
+    text-shadow: none;
+}
+
 button.predict:hover {
     border: 1px solid #a974f4;
     box-shadow: 0 0 10px #a974f4;
@@ -154,6 +165,7 @@ table.query {
 .query th, td {
     width: 50%;
     overflow: hidden;
+    padding: 4 0;
 }
 
 .query th {
