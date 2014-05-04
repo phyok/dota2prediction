@@ -46,6 +46,7 @@ div.team {
     border-radius: 8px;
     border: 1px solid;
     padding: 0 10;
+    width: 368px;
 }
 
 div.dire {
@@ -142,5 +143,36 @@ input.hero {
     background-image: url("images/navbar_shadow.png");
     background-repeat: repeat-x;
     height: 29px;
+    width: 100%;
+}
+
+table.query {
+    width: 100%;
+    text-align: left;
+}
+
+.query th, td {
+    width: 50%;
+    overflow: hidden;
+}
+
+.query th {
+    font-family: 'Marcellus SC', 'serif';
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.query td {
+    color: #aaa19c;
+}
+
+.prediction {
+    background: linear-gradient(#101113, #1e2327);
+    border: 1px solid #000000;
+    color: #aaa19c;
+    font-family: 'Marcellus SC', 'serif';
+    font-size: 36px;
+    font-weight: normal;
+    text-align: center;
     width: 100%;
 }

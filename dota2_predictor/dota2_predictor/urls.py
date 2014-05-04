@@ -9,8 +9,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'dota2_predictor.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.index, name='index')
+    url(r'^$', views.index, name='index'),
+    url(r'^prediction/', views.prediction, name='prediction')
 )
 
 urlpatterns += staticfiles_urlpatterns()
