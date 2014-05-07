@@ -1,0 +1,190 @@
+body {
+    padding-top: 68px;
+    background-image: url("images/clash_of_the_ancients.png");
+    background-position: center;
+    background-size: 100%;
+}
+
+button.predict {
+    border: 1px solid #000000;
+    font-family: 'Marcellus SC', 'serif';
+    font-weight: normal;
+    letter-spacing: 3px;
+    text-shadow: 0px 0px 10px #000000;
+    color: #aaa19c;
+    background: linear-gradient(#101113, #1e2327);
+    width: 100%;
+    position: relative;
+    top: 100px;
+}
+
+button.predict[disabled] {
+    color: #aaa19c;
+}
+
+button.predict[disabled]:hover {
+    border: 1px solid #000000;
+    color: #aaa19c;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+button.predict:hover {
+    border: 1px solid #a974f4;
+    box-shadow: 0 0 10px #a974f4;
+    color: #aaa19c;
+    text-shadow: 0px 0px 20px #a974f4;
+}
+
+div.container, .navbar .container {
+    display: table;
+    height: 100%;
+    width: 1080px;
+}
+
+.wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.team {
+    background: linear-gradient(#101113, #1e2327);
+    border-radius: 8px;
+    border: 1px solid;
+    padding: 0 10;
+    width: 368px;
+}
+
+div.dire {
+    float: left;
+    border-color: #d5483f;
+    box-shadow: 0 0 10px #d5483f;
+}
+
+div.radiant {
+    float: right;
+    border-color: #6b9fe8 ;
+    box-shadow: 0 0 10px #6b9fe8;
+}
+
+input.dire:focus {
+    border: 1px solid #d5483f;
+    box-shadow: 0 0 10px #d5483f;
+}
+
+input.radiant:focus {
+    border: 1px solid #6b9fe8;
+    box-shadow: 0 0 10px #6b9fe8;
+}
+
+.dire .typeahead .active > a,
+.dire .typeahead .active > a:hover {
+    background-color: #d5483f;
+    background-image: none;
+}
+
+.radiant .typeahead .active > a,
+.radiant .typeahead .active > a:hover {
+    background-color: #6b9fe8;
+    background-image: none;
+}
+
+.dota {
+    font-family: 'Marcellus SC', 'serif';
+    letter-spacing: 3px;
+    font-weight: normal;
+    color: #aaa19c;
+}
+
+.navbar .logo span {
+    color: #aaa19c;
+    float: none;
+    font-family: 'Marcellus SC', 'serif';
+    font-size: 36px;
+    letter-spacing: 6px;
+    text-shadow: 0px 0px 10px #000000;
+    position: absolute;
+    margin: 7 0 0 4;
+}
+
+.navbar .logo {
+    top: 16px;
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: 0px 0px 10px #000000;
+}
+
+input[type="text"] {
+    border: 1px solid #000000;
+    height: 25px;
+    width: 180px;
+}
+
+input.player {
+    margin-right: 2px;
+}
+
+input.hero {
+    margin-left: 2px;
+}
+
+.navbar {
+    background-image: url("images/navbar_background.jpg");
+    background-repeat: repeat-x;
+    height: 68px;
+    width: 100%;
+}
+
+.navbar .navbar-inner {
+    background-image: url("images/navbar.jpg");
+    border-width: 0px;
+    height: 68px;
+    width: 100%;
+}
+
+.navbar .navbar-shadow {
+    background-image: url("images/navbar_shadow.png");
+    background-repeat: repeat-x;
+    height: 29px;
+    width: 100%;
+}
+
+table.query {
+    width: 100%;
+    text-align: left;
+}
+
+.query th, td {
+    width: 50%;
+    overflow: hidden;
+    padding: 4 0;
+}
+
+.query th {
+    font-family: 'Marcellus SC', 'serif';
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.query td {
+    color: #aaa19c;
+}
+
+.prediction {
+    background: linear-gradient(#101113, #1e2327);
+    border: 1px solid #000000;
+    color: #aaa19c;
+    font-family: 'Marcellus SC', 'serif';
+    font-size: 36px;
+    font-weight: normal;
+    text-align: center;
+    width: 100%;
+}

@@ -1,0 +1,54 @@
+{% extends "dota2/base.html" %}
+
+{% block content %}
+
+<div class="wrapper">
+<div class="row-fluid content">
+    <div class="span12 well prediction">
+        {{prediction}}
+    </div>
+</div>
+<div class="row-fluid content">
+    <div class="span5">
+    <div class="dire team">
+    <h1 class="dota">dire</h1>
+    <table class="query">
+        <thead>
+            <tr><th>player</th><th>hero</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>{{dire_player_0}}</td><td>{{dire_hero_0}}</td></tr>
+            <tr><td>{{dire_player_1}}</td><td>{{dire_hero_1}}</td></tr>
+            <tr><td>{{dire_player_2}}</td><td>{{dire_hero_2}}</td></tr>
+            <tr><td>{{dire_player_3}}</td><td>{{dire_hero_3}}</td></tr>
+            <tr><td>{{dire_player_4}}</td><td>{{dire_hero_4}}</td></tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+    <div class="span2">
+    </div>
+
+    <div class="span5">
+    <div class="radiant team">
+    <h1 class="dota">radiant</h1>
+    <table class="query">
+        <thead>
+            <tr><th>player</th><th>hero</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>{{radiant_player_0}}</td><td>{{radiant_hero_0}}</td></tr>
+            <tr><td>{{radiant_player_1}}</td><td>{{radiant_hero_1}}</td></tr>
+            <tr><td>{{radiant_player_2}}</td><td>{{radiant_hero_2}}</td></tr>
+            <tr><td>{{radiant_player_3}}</td><td>{{radiant_hero_3}}</td></tr>
+            <tr><td>{{radiant_player_4}}</td><td>{{radiant_hero_4}}</td></tr>
+        </tbody>
+    </table>
+   </div>
+   </div>
+
+</div>
+</div>
+
+{% endblock %}

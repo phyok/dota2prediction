@@ -51,15 +51,11 @@ class DatDotaCsvItemPipeline(object):
 
     hero_export_fields = [
         'hero',
+        'hero_alt',
         'matches',
         'wins',
         'losses',
-        'win_rate'
-        ]
-
-    hero_mapper_export_fields = [
-        'hero_alt',
-        'hero'
+        'win_rate',
         ]
 
     def __init__(self):
@@ -80,12 +76,9 @@ class DatDotaCsvItemPipeline(object):
         if spider.name == 'datdota_matches':
             exporter.fields_to_export = DatDotaCsvItemPipeline.match_export_fields
         elif spider.name == 'datdota_players':
-
             exporter.fields_to_export = DatDotaCsvItemPipeline.player_export_fields
         elif spider.name == 'datdota_heroes':
             exporter.fields_to_export = DatDotaCsvItemPipeline.hero_export_fields
-        elif spider.name == 'datdota_hero_mapper':
-            exporter.fields_to_export = DatDotaCsvItemPipeline.hero_mapper_export_fields
         self.exporters[spider.name] = exporter
         exporter.start_exporting()
 
@@ -96,48 +89,6 @@ class DatDotaCsvItemPipeline(object):
         file.close()
 
     def process_item(self, item, spider):
-        self.exporters[spider.name].export_item(item)
-        export_fields = None
-        if spider.name == 'datdota_matches':
-            export_fields = DatDotaCsvItemPipeline.match_export_fields
-        elif spider.name == 'datdota_players':
-            export_fields = DatDotaCsvItemPipeline.player_export_fields
-        elif spider.name == 'datdota_heroes':
-            export_fields = DatDotaCsvItemPipeline.hero_export_fields
-        elif spider.name == 'datdota_hero_mapper':
-            export_fields = DatDotaCsvItemPipeline.hero_mapper_export_fields
-        if export_fields:
-            for field in export_fields:
-                if not item.get(field, None) or item[field].lower() == 'unknown':
-                    raise DropItem('Missing %s in %s' % (field, item))
+        if item.update():
+            self.exporters[spider.name].export_item(item)
             return item
-
-def item_type(item):
-    return type(item).__name__.lower()
-
-class DotabuffCsvItemPipeline(object):
-
-    def __init__(self):
-        self.item_types = ['hero', 'player']
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        pipeline = cls()
-        crawler.signals.connect(pipeline.spider_opened, signals.spider_opened)
-        crawler.signals.connect(pipeline.spider_closed, signals.spider_closed)
-        return pipeline
-
-    def spider_opened(self, spider):
-        self.files = dict([(item_type, open('%s_%s.csv' % (spider.name, item_type), 'w+b')) for item_type in self.item_types])
-        self.exporters = dict([(item_type, CsvItemExporter(self.files[item_type])) for item_type in self.item_types])
-        [e.start_exporting() for e in self.exporters.values()]
-
-    def spider_closed(self, spider):
-        [e.finish_exporting() for e in self.exporters.values()]
-        [f.close() for f in self.files.values()]
-
-    def process_item(self, item, spider):
-        t = item_type(item)
-        if t in self.item_types:
-            self.exporters[t].export_item(item)
-        return item

@@ -1,15 +1,9 @@
-from scrapy.item import Item, Field
+from scrapy.contrib.djangoitem import DjangoItem
 from scrapy.http import Request
 from scrapy.spider import Spider
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import Selector
-
-class Player(Item):
-    player = Field(serializer=str)
-    matches = Field(serializer=int)
-    wins = Field(serializer=int)
-    losses = Field(serializer=int)
-    win_rate = Field(serializer=float)
+from dota2_scrapers.items import PlayerItem
 
 class DatDotaPlayersSpider(Spider):
     name = 'datdota_players'
@@ -19,7 +13,7 @@ class DatDotaPlayersSpider(Spider):
         sel = Selector(response)
         players = sel.xpath('//table')[0].xpath('tbody//tr')
         for player in players:
-            p = Player()
+            p = PlayerItem()
             p['player'] = player.xpath('.//td[1]//a/text()').extract()[0]
             p['matches'] = player.xpath('.//td[2]/text()').extract()[0]
             p['wins'] = player.xpath('.//td[3]/text()').extract()[0]
