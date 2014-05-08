@@ -4,6 +4,8 @@ from dota2.models import Hero, Player
 from django import forms
 import simplejson as json
 import random
+import numpy as np
+from __init__ import logistic_model, heromap, playermap
 
 class PredictionForm(forms.Form):
     dire_player_0 = forms.CharField()
@@ -45,9 +47,51 @@ def prediction(request):
             context[key] = value[0]
         context['prediction'] = predict(form.data)
         return render(request, 'dota2/prediction.html', context)
- 
+
+def process_data(data):
+    FEATURE_SET_SIZE = 5898
+    DIRE_OFFSET = 2949
+
+    query = np.zeros((1,FEATURE_SET_SIZE))
+    radiant_heros = []
+    dire_heros = []
+    radiant_players = []
+    dire_players = []
+
+    radiant_heros.append(str(data[u'radiant_hero_0']))
+    radiant_heros.append(str(data[u'radiant_hero_1']))
+    radiant_heros.append(str(data[u'radiant_hero_2']))
+    radiant_heros.append(str(data[u'radiant_hero_3']))
+    radiant_heros.append(str(data[u'radiant_hero_4']))
+
+    dire_heros.append(str(data[u'dire_hero_0']))
+    dire_heros.append(str(data[u'dire_hero_1']))
+    dire_heros.append(str(data[u'dire_hero_2']))
+    dire_heros.append(str(data[u'dire_hero_3']))
+    dire_heros.append(str(data[u'dire_hero_4']))
+
+    radiant_players.append(str(data[u'radiant_player_0']))
+    radiant_players.append(str(data[u'radiant_player_1']))
+    radiant_players.append(str(data[u'radiant_player_2']))
+    radiant_players.append(str(data[u'radiant_player_3']))
+    radiant_players.append(str(data[u'radiant_player_4']))
+
+    dire_players.append(str(data[u'dire_player_0']))
+    dire_players.append(str(data[u'dire_player_1']))
+    dire_players.append(str(data[u'dire_player_2']))
+    dire_players.append(str(data[u'dire_player_3']))
+    dire_players.append(str(data[u'dire_player_4']))
+    for i in range(5):
+        query[0,int(heromap[radiant_heros[i]])] = 1
+        query[0,(int(heromap[dire_heros[i]])+DIRE_OFFSET)] = 1
+        query[0,int(playermap[radiant_players[i]])] = 1
+        query[0,(int(playermap[dire_players[i]])+DIRE_OFFSET)] = 1
+    return query
+
 def predict(data):
-    winner = random.randint(0, 1);
+    q = process_data(data)
+    winner = logistic_model.predict(q)#random.randint(0, 1);
+    print winner
     prediction = None;
     if winner == 0:
         prediction = 'radiant victory!'
