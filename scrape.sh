@@ -9,3 +9,8 @@ cd dota2_scrapers
 scrapy crawl datdota_heroes
 scrapy crawl datdota_players
 scrapy crawl datdota_matches
+cd ..
+
+cd dota2_predictor/dota2
+python preprocess.py
+cd ../..
