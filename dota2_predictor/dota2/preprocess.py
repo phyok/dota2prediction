@@ -2,7 +2,7 @@ import numpy as np
 import csv
 
 # read in the lines
-training_data = open('matchdata.txt')
+training_data = open('../../dota2_scrapers/datdota_matches.csv')
 lines = []
 for line in training_data:
     l = line.strip()
@@ -22,12 +22,12 @@ player_id = 0
 
 for n in range(len(lines)):
     game = lines[n].split(",")
-    heros = game[6:11]+game[16:21]
-    players = game[1:6]+game[11:16]
+    heros = game[9:14]+game[19:24]
+    players = game[4:9]+game[14:19]
     if heros[0] != '':
         match_players.append(players)
         match_heros.append(heros)
-        results.append(int(game[0]))
+        results.append(int(game[3]))
     for h in heros:
         if not hero_id_map.has_key(h):
             if h != '':

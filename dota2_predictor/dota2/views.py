@@ -5,7 +5,26 @@ from django import forms
 import simplejson as json
 import random
 import numpy as np
-from __init__ import logistic_model, heromap, playermap
+from sklearn import linear_model
+import csv
+
+# load training data
+f = open('trainingdata.npz')
+dat = np.load(f)
+X = dat['X']
+y = dat['y']
+f.close()
+
+logistic_reg = linear_model.LogisticRegression()
+logistic_model = logistic_reg.fit(X, y)
+
+heromap = {}
+for key, val in csv.reader(open("hero_map.csv")):
+    heromap[key] = val
+
+playermap = {}
+for key, val in csv.reader(open("player_map.csv")):
+    playermap[key] = val
 
 class PredictionForm(forms.Form):
     dire_player_0 = forms.CharField()
@@ -90,8 +109,8 @@ def process_data(data):
 
 def predict(data):
     q = process_data(data)
+    print logistic_model.predict_proba(q)
     winner = logistic_model.predict(q)#random.randint(0, 1);
-    print winner
     prediction = None;
     if winner == 0:
         prediction = 'radiant victory!'
