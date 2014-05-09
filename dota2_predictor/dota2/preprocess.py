@@ -69,6 +69,8 @@ for row in range(DATA_SIZE):
             hindex += NUM_OF_HEROS
         X[row,hindex] = 10
         
+        if players[i] == '':
+            continue
         pindex = 2*NUM_OF_HEROS+player_id_map[players[i]]
         if i >= 5:
             pindex += NUM_OF_PLAYERS
