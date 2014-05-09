@@ -77,5 +77,5 @@ for row in range(DATA_SIZE):
         X[row,pindex] = 1
 
 outfile = open("../trainingdata.npz", 'w+')
-np.savez(outfile, X=X, y=y)
+np.savez(outfile, X=X, y=y,herocount = NUM_OF_HEROS, playercount=NUM_OF_PLAYERS, featurecount = FEATURE_SET_SIZE)
 outfile.close()

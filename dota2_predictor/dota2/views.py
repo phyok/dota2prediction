@@ -13,8 +13,12 @@ f = open('trainingdata.npz')
 dat = np.load(f)
 X = dat['X']
 y = dat['y']
+FEATURE_SET_SIZE = dat['featurecount']
+herocount = dat['herocount']
+playercount = dat['playercount']
 f.close()
 
+DIRE_OFFSET = herocount + playercount
 logistic_reg = linear_model.LogisticRegression()
 logistic_model = logistic_reg.fit(X, y)
 
@@ -68,8 +72,7 @@ def prediction(request):
         return render(request, 'dota2/prediction.html', context)
 
 def process_data(data):
-    FEATURE_SET_SIZE = 5898
-    DIRE_OFFSET = 2949
+
 
     query = np.zeros((1,FEATURE_SET_SIZE))
     radiant_heros = []
@@ -109,7 +112,8 @@ def process_data(data):
 
 def predict(data):
     q = process_data(data)
-    print logistic_model.predict_proba(q)
+    print X.shape
+    #print logistic_model.predict_proba(q)
     winner = logistic_model.predict(q)#random.randint(0, 1);
     prediction = None;
     if winner == 0:
