@@ -1,10 +1,12 @@
 dota2prediction
 ===============
 
-A cool app to predict dota2 games!
+A cool app to predict Dota 2 games!
 
-To scrape data from datDota, run scrape.sh.
-The generated CSVs are in the directory dota2_scrapers.
+To get started, run <tt>scrape.sh</tt>.
+This will initialize and populate the database with scraped data.  It will also generate the csv and npz files needed by the predictor.
 
-To run the webapp, Run dota2/preprocess.py first to create the necessary csv and npz files.
+To launch the web app, enter the dota2_predictor directory (this contains the source for the web app) and run
+<tt>python manage.py runserver</tt> to launch the server.
 
+Visit localhost:8000 and start making predictions!
